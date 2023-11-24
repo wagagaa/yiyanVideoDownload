@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "ClickButtonExtension",
+  "version": "1.0",
+  "description": "A simple extension to click a button with class VAtmtpqL.",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
