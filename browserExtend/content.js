@@ -1,7 +1,10 @@
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == 'clickButton') {
-      startInterval()
+      generateVideo()
+      monitorVideoCount()
+      monitorVideoChangeError()
+      // startInterval()
       // downloadVideo()
       // test()
       // var button = document.querySelector('.VAtmtpqL');
@@ -11,6 +14,8 @@ chrome.runtime.onMessage.addListener(
       // } else {
       //   console.error('Button with class VAtmtpqL not found.');
       // }
+    } else if (request.action == 'record') {
+      alert('已生成视频数目' + (initialCount + errorCount) + '个；成功生成视频数目' + initialCount + '个；失败生成视频数目' + errorCount + '个')
     }
   }
 );
@@ -25,48 +30,70 @@ function test() {
     console.error('Input with class wBs12eIN not found.');
   }
 }
-
-function startInterval() {
-  const string = '生成一个程序员加班的视频；生成一个程序员掉头发的视频；生成一个游泳的视频；生成一个打篮球的视频；生成一个打羽毛球的视频；生成一个打乒乓球的视频；生成一个打网球的视频；生成一个打高尔夫球的视频；生成一个打保龄球的视频；生成一个打棒球的视频；生成一个打橄榄球的视频；生成一个打足球的视频；生成一个打排球的视频；生成一个打冰球的视频；生成一个打壁球的视频；生成一个打毽子的视频；生成一个打藤球的视频'
-  const array = string.split('；')
-  let currentIndex = 0
-  function target () {
-    if (currentIndex >= array.length) {
-      currentIndex = 0 // 循环
-      // clearInterval(timer)
-      // alert('已经生成完毕')
-    } else {
-      // 获取输入框并输入
-      var input = document.querySelector('.wBs12eIN');
-      if (input) {
-        input.value = array[currentIndex];
-        input.innerHTML = array[currentIndex];
-        input.textContent = array[currentIndex];
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-      } else {
-        console.error('Input with class wBs12eIN not found.');
-      }
-      // 获取发送按钮并发送
-      var button = document.querySelector('.VAtmtpqL');
-      if (button) {
-        console.log('Button found.');
-        button.click();
-      } else {
-        console.error('Button with class VAtmtpqL not found.');
-      }
-      console.log('click');
-  
-      setTimeout(() => {
-        // 获取视频并下载
-        const videoName = array[currentIndex-1] + '.mp4'
-        downloadVideo(videoName)
-      }, 180000 - 1000)
-      currentIndex++
-    }   
+const string = '生成一个程序员加班的视频；生成windows激活码全都包含的视频；生成一个打篮球的视频；生成一个打羽毛球的视频；生成一个打乒乓球的视频；生成一个打网球的视频；生成一个打高尔夫球的视频；生成一个打保龄球的视频；生成一个打棒球的视频；生成一个打橄榄球的视频；生成一个打足球的视频；生成一个打排球的视频；生成一个打冰球的视频；生成一个打壁球的视频；生成一个打毽子的视频；生成一个打藤球的视频'
+const array = string.split('；')
+// 获取初始的DOM数量
+let initialCount = document.getElementsByClassName('vjs-tech').length
+// 无法生成视频的次数
+let errorCount = 0
+// 生成视频
+function generateVideo() {
+  // 获取输入框并输入
+  var input = document.querySelector('.wBs12eIN');
+  if (input) {
+    input.value = array[initialCount + errorCount];
+    input.innerHTML = array[initialCount + errorCount];
+    input.textContent = array[initialCount + errorCount];
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  } else {
+    alert('Input with class wBs12eIN not found.');
   }
-  target()
-  const timer = setInterval(target, 180000)
+  // 获取发送按钮并发送
+  var button = document.querySelector('.VAtmtpqL');
+  if (button) {
+    button.click();
+  } else {
+    alert('Button with class VAtmtpqL not found.');
+  }
 }
+// 监控视频数目的变化
+function monitorVideoCount() {
+  // 监听DOM结构的变化
+  const observer = new MutationObserver(() => {
+      // 获取变化后的DOM数量
+      let currentCount = document.getElementsByClassName('vjs-tech').length;
+      // 判断数量是否发生变化
+      if (currentCount !== initialCount) {
+        downloadVideo() // 下载视频
+        clearInterval(timer) // 清除定时器
+        monitorVideoChangeError() // 重新开始计时
+        // 更新初始数量
+        initialCount = currentCount;
+        generateVideo() // 生成视频
+      }
+  });
+  // 配置观察器，监视子节点的变化
+  const config = { childList: true, subtree: true };
+  // 开始观察
+  observer.observe(document.body, config);
+}
+// 视频十分钟无变化处理
+let timer = null
+function monitorVideoChangeError() {
+  timer = setInterval(() => {
+    // 跳过当前词汇，生成下一个视频
+    errorCount++
+    if (initialCount + errorCount >= array.length) {
+      alert('已经生成完毕')
+      clearInterval(timer) // 清除定时器
+      return
+    }
+    generateVideo()
+    clearInterval(timer) // 清除定时器
+    monitorVideoChangeError() // 重新开始计时
+  }, 180000)
+}
+
 // 下载文件
 function daonload(url, name){
   // 方法一
@@ -96,7 +123,7 @@ function daonload(url, name){
   document.body.removeChild(link);
 }
 // 下载视频
-function downloadVideo(videoName) {
+function downloadVideo() {
   // 获取视频并下载
   var videoElement = document.querySelector('.vjs-tech');
   // alert(!!videoElement)
@@ -108,7 +135,7 @@ function downloadVideo(videoName) {
     const url = new URL(videoSource);
     url.search = '';
     const updatedUrlString = url.toString();
-    const name = videoName || document.querySelector('.wBs12eIN').value + '.mp4'
+    const name = array[initialCount + errorCount] + '.mp4'
     // 输出视频地址
     console.log('Video Source:', updatedUrlString);
     daonload(updatedUrlString, name);
