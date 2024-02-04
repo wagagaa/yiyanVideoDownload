@@ -2,7 +2,13 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == 'clickButton') {
       initialCount = document.getElementsByClassName('vjs-tech').length
-      errorCount = document.getElementsByClassName('custom-html').length
+      let currentErrorCount = 0
+      for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
+        if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+          currentErrorCount++
+        }
+      }
+      errorCount = currentErrorCount
       generateVideo()
       monitorVideoCount()
       clearInterval(timer)
@@ -83,95 +89,106 @@ function test() {
   }
 }
 
-const string = `介绍组合成套型的结构特点
-介绍多元组合型的结构简图
-介绍多元组合型的结构特点
-介绍后置齿轮减速箱组合型结构简图
-介绍后置齿轮减速箱组合型的结构特点
-介绍后置行星齿轮是减速型的结构特点
-介绍后置行星齿轮是减速型的结构简图
-介绍液力偶合器传动装置结构及特点
-前置齿轮式增速型液力偶合器传动装置结构
-前置齿轮式增速型液力偶合器传动装置的特点
-介绍后置齿轮式减速型液力偶合器传动装置
-复合齿轮是前增后增型液力偶合器传动装置
-介绍组合成套型液力偶合器传动装置
-后置齿轮式减速正车型液力偶合器传动装置
-介绍多元组合型液力偶合器传动装置
-介绍多元组合型液力偶合器传动装置特点
-介绍液力减速器
-介绍机车用液力减速器
-介绍汽车用液力减速器分类
-介绍单一减速制动型特性
-介绍牵引制动复合型的特性
-建设汽车用液力减速器的控制系统
-介绍驱动状态
-介绍发电状态
-介绍驱动系统
-介绍控制系统
-介绍下运带式液力减速器控制系统功能
-采区停电紧急制动工况液力减速器控制说明
-介绍液力偶合器设计分类
-介绍创新设计的说明
-介绍类比设计的说明
-介绍仿形设计的说明
-介绍变形设计说明
-介绍成套设计的说明
-介绍选型匹配设计的说明
-介绍配套建设计的说明
-介绍机组调速系统控制设计的说明
-介绍液力元件的类比设计
-介绍相似理论
-介绍相似准则
-介绍设计步骤
-介绍注意事项
-介绍限矩型液力偶合器设计
-介绍工作腔模型及选择
-介绍选择过载系数低的腔型
-介绍分流泄液
-介绍阻流
-介绍改进叶轮结构
-介绍部分液体偶合器工作腔几何参数及特性
-介绍标准型工作腔形状
-介绍标准型原始特性曲线
-介绍标准型的几何参数
-介绍标准型的特性参数
-介绍标准型的特点
-介绍长圆形的工作腔形状
-介绍长圆形的原始特性曲线
-介绍长圆形的几何参数
-介绍长圆形的特性参数
-介绍长圆形的特点
-介绍圆形的工作腔形状
-介绍圆形的原始特性曲线
-介绍圆形的几何参数
-介绍圆形的特性参数
-介绍圆形的特点
-介绍桃形的原始特性曲线
-介绍桃形的工作腔形状
-介绍桃形的几何参数
-介绍桃形的特性参数
-介绍桃形的特点
-介绍多角形的工作腔特点
-介绍多角形的几何参数
-介绍多角形的特性参数
-介绍多角形的特点
-介绍多角形的原始特性曲线
-介绍静压泄液式的原始特性曲线
-介绍静压泄液式的几何参数
-介绍静压泄液式的特性参数
-介绍静压泄液式的特点
-介绍动压泄液式的工作腔形状
-介绍静压泄液式的工作腔形状
-介绍动压泄液式的几何参数
-介绍动压泄液式的原始特性曲线
-介绍动压泄液式的特点
-介绍延充式的工作腔形状
-介绍延充式的几何参数
-介绍延充式的特性参数
-介绍延充式的特点
-介绍限矩型液力偶合器的辅助腔
-介绍限矩型液力偶合器辅助腔的作用`
+const string = `介绍控制机构符号绘制规则
+介绍能量控制和调节元件符号
+介绍能量控制和调节元件符号绘制规则
+介绍能量控制和调节元件符号的示例
+介绍单一控制机构符号
+介绍复合控制机构符号
+介绍二通阀详细符号
+介绍二通阀常开可变节流详细符号
+介绍三通阀详细符号
+介绍旋转方向标注规则
+介绍泵的旋转方向标注规则
+介绍马达的旋转方向标注规则
+介绍泵马达的旋转方向标注规
+介绍控制位置的标注规则
+介绍控制位置只是线的标注规则
+介绍控制位置标注的标注规则
+介绍变量液压马达的符号
+介绍定量液压马达的符号
+介绍变量液压马达的符号
+介绍变量液压泵的符号
+介绍定量液压泵的符号
+介绍变量液压泵马达的符号
+介绍变量可逆时旋转泵马达的符号
+介绍定量变量可逆时旋转泵的符号
+介绍常用液压术语
+介绍液体流动的解释
+介绍液压技术的解释
+介绍静液压技术的解释
+介绍运行工况的解释
+介绍额定工况的解释
+介绍标准工况的解释
+介绍公称压力的解释
+介绍工作压力的解释
+介绍工作压力范围的解释
+介绍进口压力的解释
+介绍出口压力的解释
+介绍压降压差的解释
+介绍控制压力范围的解释
+介绍背压的解释
+介绍启动压力的解释
+介绍爆破压力的解释
+介绍连续工况的解释
+介绍极限工况的解释
+介绍峰值压力的解释
+介绍运行压力的解释
+介绍冲击压力的解释
+介绍系统压力的解释
+介绍极限工况的解释
+介绍充气压力的解释
+介绍吸入压力的解释
+介绍瞬态工况的介绍
+介绍实际工况的解释
+介绍吸入压力的解释
+介绍额定压力的解释
+既是调压偏差的解释
+介绍流量的解释
+介绍间歇工况的解释
+介绍周期稳定工况的解释
+介绍规定工况的解释
+介绍额定流量的解释
+介绍供给流量的解释
+介绍泄露的解释
+介绍介质的温度范围的解释
+介绍装置的温度范围的解释
+介绍内泄露的解释
+介绍外泄露的解释
+介绍环境温度的解释
+介绍液压泵的术语
+介绍液压泵的解释
+介绍容积式泵的解释
+介绍定量泵的解释
+介绍变量泵的解释
+介绍非平衡式叶片泵的解释
+介绍平衡式叶片泵的解释
+介绍柱塞泵的解释
+介绍径向柱塞泵的解释
+介绍齿轮泵的解释
+介绍叶片泵的解释
+介绍轴向柱塞泵的解释
+介绍多联泵的解释
+介绍液压马达和缸的术语
+介绍液压马达的解释
+介绍容积式马达的解释
+介绍叶片式马达的解释
+介绍变量马达的解释
+介绍齿轮马达的解释
+介绍径向柱塞马达的解释
+介绍定量马达的解释
+介绍轴向柱塞马达的解释
+介绍缸的解释
+介绍活塞缸的解释
+介绍摆动马达的解释
+介绍单活塞杠缸的解释
+介绍双活塞杆缸的解释
+介绍差动缸的解释
+介绍单作用缸的解释
+介绍弹簧复位单作用缸的解释
+介绍多级伸缩缸的解释
+介绍重力复位单作用缸的解释
+介绍双联缸的解释`
 
 const array = string.split(/\s*[；\s\n]+\s*/)
 // 获取初始的DOM数量
@@ -240,9 +257,16 @@ function generateVideo() {
   } else {
     alert('Input with class yc-editor-wrapper not found.');
   }
-  setTimeout(() => {
-    document.querySelector('.VAtmtpqL').click();
-  }, 30000)
+  // 获取发送按钮并发送
+  setTimeout(() => { // 延迟发送，防止发送失败
+    var button = document.querySelector('.VAtmtpqL');
+    if (button) {
+      button.click();
+    } else {
+      alert('Button with class VAtmtpqL not found.');
+    }
+  }, 500)
+  
   // const timer = setInterval(() => {
   //   var button = document.querySelector('.VAtmtpqL svg');
   //   // alert(button.getAttribute('width') == 240)
@@ -261,10 +285,11 @@ function monitorVideoCount() {
   // 监听DOM结构的变化
   const observer = new MutationObserver(() => {
       // 获取变化后的DOM数量
-      let currentCount = document.getElementsByClassName('MuW1NXvm').length; // 视频和文字不是同时生成。需要按最后文字生成完计算
+      let currentCount = document.getElementsByClassName('vjs-tech').length;
+      ; // 视频和文字不是同时生成。需要按最后文字生成完计算
       // 判断数量是否发生变化
       if (currentCount !== initialCount) {
-        downloadVideoSection() // 下载视频
+        downloadVideo() // 下载视频
         clearInterval(timer) // 清除定时器
         monitorVideoChangeError() // 重新开始计时
         // 更新初始数量
@@ -286,7 +311,12 @@ function monitorVideoCount() {
         generateVideo() // 生成视频
       }
 
-      let currentErrorCount = document.getElementsByClassName('custom-html').length;
+      let currentErrorCount = 0
+      for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
+        if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+          currentErrorCount++
+        }
+      }
       // 判断数量是否发生变化
       if (currentErrorCount !== errorCount) {
         clearInterval(timer) // 清除定时器
@@ -365,14 +395,25 @@ function daonload(url, name){
   document.body.removeChild(link);
 }
 // 下载视频
-function downloadVideo(videoUrl, index) {
-  // 去掉查询字符串
-  const url = new URL(videoUrl);
-  url.search = '';
-  const updatedUrlString = url.toString();
-  const name = array[initialCount + errorCount] + '-' + index + '.mp4'
-  // 输出视频地址
-  daonload(updatedUrlString, name);
+function downloadVideo() {
+  // 获取视频并下载
+  var videoElement = document.querySelector('.vjs-tech');
+  // alert(!!videoElement)
+  if (videoElement) {
+    // 获取视频的当前源
+    var videoSource = videoElement.src;
+
+    // 去掉查询字符串
+    const url = new URL(videoSource);
+    url.search = '';
+    const updatedUrlString = url.toString();
+    const name = array[initialCount + errorCount] + '.mp4'
+    // 输出视频地址
+    console.log('Video Source:', updatedUrlString);
+    daonload(updatedUrlString, name);
+  } else {
+    console.error('Video element with class vjs-tech not found.');
+  }
 }
 
 /**
@@ -381,13 +422,17 @@ function downloadVideo(videoUrl, index) {
 // 获取没有生成视频的词条
 function getErrorWord() {
   const errorWord = []
-  // 获取所有 class 为 'custom-html' 的元素
-  const elementsA = document.getElementsByClassName('custom-html');
 
-  // 遍历这些元素
-  for (let i = 0; i < elementsA.length; i++) {
+  // 递归查找具有指定类名的祖先元素
+  function findAncestorWithClass(element, className) {
+      while ((element = element.parentElement) && !element.classList.contains(className));
+      return element;
+  }
+
+  for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
+    if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
       // 获取祖先元素
-      const ancestor = findAncestorWithClass(elementsA[i], 'RmHagX8t');
+      const ancestor = findAncestorWithClass(document.getElementsByClassName('MuW1NXvm')[index], 'RmHagX8t');
       // 检查是否找到了祖先元素
       if (ancestor) {
           // 获取祖元素的下一个兄弟元素
@@ -409,12 +454,7 @@ function getErrorWord() {
       } else {
         alert('未找到符合条件的祖先元素');
       }
-  }
-
-  // 递归查找具有指定类名的祖先元素
-  function findAncestorWithClass(element, className) {
-      while ((element = element.parentElement) && !element.classList.contains(className));
-      return element;
+    }
   }
 
   const modifiedArray = errorWord.map(str => {
