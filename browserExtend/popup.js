@@ -8,11 +8,11 @@ document.getElementById('getError').addEventListener('click', function() {
     chrome.tabs.sendMessage(tabs[0].id, {action: 'getError'});
   });
 });
-document.getElementById('downloadVideo').addEventListener('click', function() {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {action: 'downloadVideo'});
-  });
-});
+// document.getElementById('downloadVideo').addEventListener('click', function() {
+//   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//     chrome.tabs.sendMessage(tabs[0].id, {action: 'downloadVideo'});
+//   });
+// });
 setInterval(() => {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     var activeTab = tabs[0];

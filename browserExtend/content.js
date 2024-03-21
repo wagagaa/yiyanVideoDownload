@@ -3,8 +3,8 @@ chrome.runtime.onMessage.addListener(
     if (request.action == 'clickButton') {
       initialCount = document.getElementsByClassName('vjs-tech').length
       let currentErrorCount = 0
-      for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
-        if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+      for (let index = 0; index < document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p').length; index++) {
+        if (document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
           currentErrorCount++
         }
       }
@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener(
       alert(errorWord)
     } else if (request.action === "getRecordCount") {
       var count = document.querySelectorAll('.test').length;
-      sendResponse({ count: '已生成' + (initialCount + errorCount) + '个；成功' + initialCount + '个；失败' + errorCount + '个；总共' + array.length + '个' });
+      sendResponse({ count: '已生成' + (initialCount + errorCount) + '个；成功' + initialCount + '个；失败' + errorCount + '个；总共' + array.length + '个；成功率：' + (initialCount / realNum * 100).toFixed(2) + '%' });
     } else if (request.action == 'downloadVideo') {
       downloadVideoSection()
     }
@@ -89,108 +89,120 @@ function test() {
   }
 }
 
-const string = `介绍控制机构符号绘制规则
-介绍能量控制和调节元件符号
-介绍能量控制和调节元件符号绘制规则
-介绍能量控制和调节元件符号的示例
-介绍单一控制机构符号
-介绍复合控制机构符号
-介绍二通阀详细符号
-介绍二通阀常开可变节流详细符号
-介绍三通阀详细符号
-介绍旋转方向标注规则
-介绍泵的旋转方向标注规则
-介绍马达的旋转方向标注规则
-介绍泵马达的旋转方向标注规
-介绍控制位置的标注规则
-介绍控制位置只是线的标注规则
-介绍控制位置标注的标注规则
-介绍变量液压马达的符号
-介绍定量液压马达的符号
-介绍变量液压马达的符号
-介绍变量液压泵的符号
-介绍定量液压泵的符号
-介绍变量液压泵马达的符号
-介绍变量可逆时旋转泵马达的符号
-介绍定量变量可逆时旋转泵的符号
-介绍常用液压术语
-介绍液体流动的解释
-介绍液压技术的解释
-介绍静液压技术的解释
-介绍运行工况的解释
-介绍额定工况的解释
-介绍标准工况的解释
-介绍公称压力的解释
-介绍工作压力的解释
-介绍工作压力范围的解释
-介绍进口压力的解释
-介绍出口压力的解释
-介绍压降压差的解释
-介绍控制压力范围的解释
-介绍背压的解释
-介绍启动压力的解释
-介绍爆破压力的解释
-介绍连续工况的解释
-介绍极限工况的解释
-介绍峰值压力的解释
-介绍运行压力的解释
-介绍冲击压力的解释
-介绍系统压力的解释
-介绍极限工况的解释
-介绍充气压力的解释
-介绍吸入压力的解释
-介绍瞬态工况的介绍
-介绍实际工况的解释
-介绍吸入压力的解释
-介绍额定压力的解释
-既是调压偏差的解释
-介绍流量的解释
-介绍间歇工况的解释
-介绍周期稳定工况的解释
-介绍规定工况的解释
-介绍额定流量的解释
-介绍供给流量的解释
-介绍泄露的解释
-介绍介质的温度范围的解释
-介绍装置的温度范围的解释
-介绍内泄露的解释
-介绍外泄露的解释
-介绍环境温度的解释
-介绍液压泵的术语
-介绍液压泵的解释
-介绍容积式泵的解释
-介绍定量泵的解释
-介绍变量泵的解释
-介绍非平衡式叶片泵的解释
-介绍平衡式叶片泵的解释
-介绍柱塞泵的解释
-介绍径向柱塞泵的解释
-介绍齿轮泵的解释
-介绍叶片泵的解释
-介绍轴向柱塞泵的解释
-介绍多联泵的解释
-介绍液压马达和缸的术语
-介绍液压马达的解释
-介绍容积式马达的解释
-介绍叶片式马达的解释
-介绍变量马达的解释
-介绍齿轮马达的解释
-介绍径向柱塞马达的解释
-介绍定量马达的解释
-介绍轴向柱塞马达的解释
-介绍缸的解释
-介绍活塞缸的解释
-介绍摆动马达的解释
-介绍单活塞杠缸的解释
-介绍双活塞杆缸的解释
-介绍差动缸的解释
-介绍单作用缸的解释
-介绍弹簧复位单作用缸的解释
-介绍多级伸缩缸的解释
-介绍重力复位单作用缸的解释
-介绍双联缸的解释`
+const string = `介绍超声波接近开关产品性能
+介绍欧姆龙超声波传感器
+介绍速度传感器
+介绍线速度传感器
+介绍线速度传感器的分类及特点
+介绍磁电式速度传感器
+介绍磁电式速度传感器的工作原理
+介绍磁电式速度传感器产品
+介绍线速度传感器选用语性能比较表
+解绍
+介绍隔爆型传感器的主要性能指标
+介绍激光多普勒测速
+介绍激光多普勒测速的工作原理
+介绍激光多普勒测速产品
+介绍激光测速仪
+介绍信号处理器技术指标
+介绍微波测速
+介绍微波测速工作原理
+介绍微波测速微波测速产品
+介绍角速度传感器
+介绍角速度传感器分类和主要性能指标
+介绍角速度定义
+介绍角速度的分类
+介绍角速度传感器选用与性能比较
+介绍霍尔转速传感器
+介绍霍尔转速传感器的工作原理
+介绍转速传感器选用与性能比较表
+介绍磁电式转速传感器测量范围
+介绍霍尔转速传感器测量范围
+介绍霍尔转速传感器精度
+介绍霍尔转速传感器频率响应
+介绍霍尔转速传感器的特点
+介绍磁电式转速传感器的精度
+介绍磁电式转速传感器频率响应
+介绍磁电式转速传感器的特点
+介绍光电式转速传感器的测量范围
+介绍光电式转速传感器的精度
+介绍光电式转速传感器的频率响应
+介绍光电式转速传感器的特点
+介绍电涡流转速传感器的测量范围
+介绍电涡流转速传感器的精度
+介绍电涡流转速传感器的频率响应
+介绍电涡流转速传感器的特点
+介绍光纤陀螺的测量范围
+介绍光纤陀螺的精度
+介绍光纤陀螺的频率响应
+介绍光纤陀螺的特点
+介绍激光陀螺的测量范围
+介绍激光陀螺的精度
+介绍激光陀螺的频率响应
+介绍激光陀螺的特点
+介绍压电射流角速度传感器的测量范围
+介绍压电射流角速度传感器的精度
+介绍压电射流角速度传感器的频率响应
+介绍压电射流角速度传感器的特点
+介绍霍尔转速传感器产品
+介绍无源转速探头
+介绍霍尔转速传感器主要技术指标
+介绍磁电式转速传感器
+介绍磁电式转速传感器的工作原理
+介绍闭合磁路变磁通式磁电式转速传感器
+介绍磁电式转速传感器主要技术指标
+介绍系列磁电式转速传感器主要技术指标
+小野测器集团磁电式转速传感器使用检测规格
+介绍光电式速度传感器
+介绍光电式速度传感器的工作原理
+介绍反射式光电转速传感器
+介绍直射式光电转速传感器
+介绍光电式速度传感器产品
+介绍电涡流转速传感器
+介绍电涡流转速传感器的工作原理
+介绍电涡流转速传感器产品
+介绍电涡流式转速传感器主要技术指标
+介绍光纤陀螺
+介绍光纤陀螺的工作原理
+介绍激光转速传感器与激光陀螺
+介绍激光转速传感器的工作原理
+介绍激光转速传感器产品
+介绍激光陀螺仪的工作原理
+介绍激光转速表
+介绍激光陀螺产品
+介绍激光转速表主要技术指标
+介绍压电射流角速度传感器
+介绍压电射流角速度传感器产品
+介绍压电射流角速度传感器工作原理
+介绍振动与冲击测量传感器
+介绍机械振动冲击名词术语
+介绍机械振动
+介绍振动
+介绍周期振动
+介绍准周期振动
+介绍准正弦振动
+介绍确定性振动
+介绍随机振动
+介绍高斯随机噪声
+介绍白噪声
+介绍粉红噪声
+介绍窄带随机振动
+介绍宽带随机振动
+介绍稳态振动`
+
+// 本周工作：
+// 1. 文心一言带水印视频生成1600个
+// 2. 灵创播放器需求评审并给出wbs
+// 3. 门户网站项目的前端成本评估
+// 4. 未来课堂调用设备优化后的上线
+
+// 下周工作：
+// 1. 文心一言带水印视频生产
+// 2. 灵创播放器项目的导出JSON
 
 const array = string.split(/\s*[；\s\n]+\s*/)
+// 实际需要生成视频的词条数
+const realNum = array.length
 // 获取初始的DOM数量
 let initialCount = 0
 // 无法生成视频的次数
@@ -265,7 +277,7 @@ function generateVideo() {
     } else {
       alert('Button with class VAtmtpqL not found.');
     }
-  }, 500)
+  }, 25000)
   
   // const timer = setInterval(() => {
   //   var button = document.querySelector('.VAtmtpqL svg');
@@ -284,65 +296,67 @@ function generateVideo() {
 function monitorVideoCount() {
   // 监听DOM结构的变化
   const observer = new MutationObserver(() => {
-      // 获取变化后的DOM数量
-      let currentCount = document.getElementsByClassName('vjs-tech').length;
-      ; // 视频和文字不是同时生成。需要按最后文字生成完计算
-      // 判断数量是否发生变化
-      if (currentCount !== initialCount) {
-        downloadVideo() // 下载视频
-        clearInterval(timer) // 清除定时器
-        monitorVideoChangeError() // 重新开始计时
-        // 更新初始数量
-        initialCount = currentCount;
-        if (initialCount + errorCount >= array.length) {
-          if (batch === 1) {
-            alert('第一批次生成完毕，开始将上一批次的错误词条生成视频')
-            // 第二批次开始后，记录的成功失败代表的是两次批次的成功失败
-            batch++
-            array.push(...getErrorWord())
-          } else {
-            alert('已经生成完毕')
-            clearInterval(timer) // 清除定时器
-            // 监听DOM结构的变化停止
-            observer.disconnect();
-          }
-          return
+    // 检测单个视频生成完成
+    // 获取变化后的DOM数量
+    let currentCount = document.getElementsByClassName('vjs-tech').length;
+    ; // 视频和文字不是同时生成。需要按最后文字生成完计算
+    // 判断数量是否发生变化
+    if (currentCount !== initialCount) {
+      downloadVideo() // 下载视频
+      clearInterval(timer) // 清除定时器
+      monitorVideoChangeError() // 重新开始计时
+      // 更新初始数量
+      initialCount = currentCount;
+      if (initialCount + errorCount >= array.length) {
+        if (batch === 1) {
+          alert('第一批次生成完毕，开始将上一批次的错误词条生成视频。成功率：' + (initialCount / realNum * 100).toFixed(2) + '%')
+          // 第二批次开始后，记录的成功失败代表的是两次批次的成功失败
+          batch++
+          array.push(...getErrorWord())
+        } else {
+          alert('已经生成完毕。成功率：' + (initialCount / realNum * 100).toFixed(2) + '%')
+          clearInterval(timer) // 清除定时器
+          // 监听DOM结构的变化停止
+          observer.disconnect();
         }
-        generateVideo() // 生成视频
+        return
       }
+      generateVideo() // 生成视频
+    }
 
-      let currentErrorCount = 0
-      for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
-        if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
-          currentErrorCount++
-        }
+    // 检测单个视频生成错误
+    let currentErrorCount = 0
+    for (let index = 0; index < document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p').length; index++) {
+      if (document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+        currentErrorCount++
       }
-      // 判断数量是否发生变化
-      if (currentErrorCount !== errorCount) {
-        clearInterval(timer) // 清除定时器
-        monitorVideoChangeError() // 重新开始计时
-        // 更新初始数量
-        errorCount = currentErrorCount;
-        if (initialCount + errorCount >= array.length) {
-          if (batch === 1) {
-            alert('第一批次生成完毕，开始将上一批次的错误词条生成视频')
-            // 第二批次开始后，记录的成功失败代表的是两次批次的成功失败
-            batch++
-            array.push(...getErrorWord())
-          } else {
-            alert('已经生成完毕')
-            clearInterval(timer) // 清除定时器
-            // 监听DOM结构的变化停止
-            observer.disconnect();
-          }
-          
-          return
+    }
+    // 判断数量是否发生变化
+    if (currentErrorCount !== errorCount) {
+      clearInterval(timer) // 清除定时器
+      monitorVideoChangeError() // 重新开始计时
+      // 更新初始数量
+      errorCount = currentErrorCount;
+      if (initialCount + errorCount >= array.length) {
+        if (batch === 1) {
+          alert('第一批次生成完毕，开始将上一批次的错误词条生成视频。成功率：' + (initialCount / realNum * 100).toFixed(2) + '%')
+          // 第二批次开始后，记录的成功失败代表的是两次批次的成功失败
+          batch++
+          array.push(...getErrorWord())
+        } else {
+          alert('已经生成完毕。成功率：' + (initialCount / realNum * 100).toFixed(2) + '%')
+          clearInterval(timer) // 清除定时器
+          // 监听DOM结构的变化停止
+          observer.disconnect();
         }
-        // 生成视频
-        setTimeout(() => {
-          generateVideo()
-        }, 10000);
+        
+        return
       }
+      // 生成视频
+      setTimeout(() => {
+        generateVideo()
+      }, 10000);
+    }
   });
   // 配置观察器，监视子节点的变化
   const config = { childList: true, subtree: true };
@@ -429,10 +443,10 @@ function getErrorWord() {
       return element;
   }
 
-  for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
-    if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+  for (let index = 0; index < document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p').length; index++) {
+    if (document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
       // 获取祖先元素
-      const ancestor = findAncestorWithClass(document.getElementsByClassName('MuW1NXvm')[index], 'RmHagX8t');
+      const ancestor = findAncestorWithClass(document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p')[index], 'RmHagX8t');
       // 检查是否找到了祖先元素
       if (ancestor) {
           // 获取祖元素的下一个兄弟元素
