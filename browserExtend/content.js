@@ -3,8 +3,8 @@ chrome.runtime.onMessage.addListener(
     if (request.action == 'clickButton') {
       initialCount = document.getElementsByClassName('vjs-tech').length
       let currentErrorCount = 0
-      for (let index = 0; index < document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p').length; index++) {
-        if (document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+      for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
+        if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
           currentErrorCount++
         }
       }
@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener(
       alert(errorWord)
     } else if (request.action === "getRecordCount") {
       var count = document.querySelectorAll('.test').length;
-      sendResponse({ count: '已生成' + (initialCount + errorCount) + '个；成功' + initialCount + '个；失败' + errorCount + '个；总共' + array.length + '个；成功率：' + (initialCount / realNum * 100).toFixed(2) + '%' });
+      sendResponse({ count: '已生成' + (initialCount + errorCount) + '个；成功' + initialCount + '个；失败' + errorCount + '个；总共' + array.length + '个' });
     } else if (request.action == 'downloadVideo') {
       downloadVideoSection()
     }
@@ -38,6 +38,7 @@ function downloadVideoSection () {
   const videoArr = [] // 同一个视频的多个分段集合
   // 点击按钮开始播放
   var button = document.querySelector('.UoIKNZvt');
+  const baseName = array[initialCount + errorCount]
   try {
     if (button) {
       button.click();
@@ -62,12 +63,12 @@ function downloadVideoSection () {
         // alert('视频源获取完毕')
         clearInterval(timer)
         const videoArrSet = [...new Set(videoArr)]
-        // alert(videoArrSet.join('----'))
+        console.log(videoArrSet.join('----'))
         videoArrSet.forEach((videoUrl, index) => {
-          // alert('开始下载第' + (index + 1) + '个视频')
+          console.log('开始下载第' + (index + 1) + '个视频')
           setTimeout(() => {
-            downloadVideo(videoUrl, index)
-          }, index * 1000);
+            daonload(videoUrl, baseName + '-' + index + '.mp4')
+          }, index * 1500);
         })
       }, 35000)
     } else {
@@ -190,19 +191,7 @@ const string = `介绍超声波接近开关产品性能
 介绍宽带随机振动
 介绍稳态振动`
 
-// 本周工作：
-// 1. 文心一言带水印视频生成1600个
-// 2. 灵创播放器需求评审并给出wbs
-// 3. 门户网站项目的前端成本评估
-// 4. 未来课堂调用设备优化后的上线
-
-// 下周工作：
-// 1. 文心一言带水印视频生产
-// 2. 灵创播放器项目的导出JSON
-
 const array = string.split(/\s*[；\s\n]+\s*/)
-// 实际需要生成视频的词条数
-const realNum = array.length
 // 获取初始的DOM数量
 let initialCount = 0
 // 无法生成视频的次数
@@ -277,7 +266,7 @@ function generateVideo() {
     } else {
       alert('Button with class VAtmtpqL not found.');
     }
-  }, 25000)
+  }, 35000)
   
   // const timer = setInterval(() => {
   //   var button = document.querySelector('.VAtmtpqL svg');
@@ -296,67 +285,70 @@ function generateVideo() {
 function monitorVideoCount() {
   // 监听DOM结构的变化
   const observer = new MutationObserver(() => {
-    // 检测单个视频生成完成
-    // 获取变化后的DOM数量
-    let currentCount = document.getElementsByClassName('vjs-tech').length;
-    ; // 视频和文字不是同时生成。需要按最后文字生成完计算
-    // 判断数量是否发生变化
-    if (currentCount !== initialCount) {
-      downloadVideo() // 下载视频
-      clearInterval(timer) // 清除定时器
-      monitorVideoChangeError() // 重新开始计时
-      // 更新初始数量
-      initialCount = currentCount;
-      if (initialCount + errorCount >= array.length) {
-        if (batch === 1) {
-          alert('第一批次生成完毕，开始将上一批次的错误词条生成视频。成功率：' + (initialCount / realNum * 100).toFixed(2) + '%')
-          // 第二批次开始后，记录的成功失败代表的是两次批次的成功失败
-          batch++
-          array.push(...getErrorWord())
-        } else {
-          alert('已经生成完毕。成功率：' + (initialCount / realNum * 100).toFixed(2) + '%')
-          clearInterval(timer) // 清除定时器
-          // 监听DOM结构的变化停止
-          observer.disconnect();
+      // 获取变化后的DOM数量
+      let currentCount = 0
+      for (let index = 0; index < document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p').length; index++) {
+        if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '视频已生成，请点击播放。部分的方言播报，以及指定背景音乐、视频时长、视频风格等，我还在探索和学习中。您也可以尝试其他视频，如：“生成智能交通的视频，四川话播报”。') {
+          currentCount++
         }
-        return
       }
-      generateVideo() // 生成视频
-    }
+      ; // 视频和文字不是同时生成。需要按最后文字生成完计算
+      // 判断数量是否发生变化
+      if (currentCount !== initialCount) {
+        downloadVideoSection() // 下载视频
+        clearInterval(timer) // 清除定时器
+        monitorVideoChangeError() // 重新开始计时
+        // 更新初始数量
+        initialCount = currentCount;
+        if (initialCount + errorCount >= array.length) {
+          if (batch === 1) {
+            alert('第一批次生成完毕，开始将上一批次的错误词条生成视频')
+            // 第二批次开始后，记录的成功失败代表的是两次批次的成功失败
+            batch++
+            array.push(...getErrorWord())
+          } else {
+            alert('已经生成完毕')
+            clearInterval(timer) // 清除定时器
+            // 监听DOM结构的变化停止
+            observer.disconnect();
+          }
+          return
+        }
+        generateVideo() // 生成视频
+      }
 
-    // 检测单个视频生成错误
-    let currentErrorCount = 0
-    for (let index = 0; index < document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p').length; index++) {
-      if (document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
-        currentErrorCount++
-      }
-    }
-    // 判断数量是否发生变化
-    if (currentErrorCount !== errorCount) {
-      clearInterval(timer) // 清除定时器
-      monitorVideoChangeError() // 重新开始计时
-      // 更新初始数量
-      errorCount = currentErrorCount;
-      if (initialCount + errorCount >= array.length) {
-        if (batch === 1) {
-          alert('第一批次生成完毕，开始将上一批次的错误词条生成视频。成功率：' + (initialCount / realNum * 100).toFixed(2) + '%')
-          // 第二批次开始后，记录的成功失败代表的是两次批次的成功失败
-          batch++
-          array.push(...getErrorWord())
-        } else {
-          alert('已经生成完毕。成功率：' + (initialCount / realNum * 100).toFixed(2) + '%')
-          clearInterval(timer) // 清除定时器
-          // 监听DOM结构的变化停止
-          observer.disconnect();
+      let currentErrorCount = 0
+      for (let index = 0; index < document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p').length; index++) {
+        if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+          currentErrorCount++
         }
-        
-        return
       }
-      // 生成视频
-      setTimeout(() => {
-        generateVideo()
-      }, 10000);
-    }
+      // 判断数量是否发生变化
+      if (currentErrorCount !== errorCount) {
+        clearInterval(timer) // 清除定时器
+        monitorVideoChangeError() // 重新开始计时
+        // 更新初始数量
+        errorCount = currentErrorCount;
+        if (initialCount + errorCount >= array.length) {
+          if (batch === 1) {
+            alert('第一批次生成完毕，开始将上一批次的错误词条生成视频')
+            // 第二批次开始后，记录的成功失败代表的是两次批次的成功失败
+            batch++
+            array.push(...getErrorWord())
+          } else {
+            alert('已经生成完毕')
+            clearInterval(timer) // 清除定时器
+            // 监听DOM结构的变化停止
+            observer.disconnect();
+          }
+          
+          return
+        }
+        // 生成视频
+        setTimeout(() => {
+          generateVideo()
+        }, 10000);
+      }
   });
   // 配置观察器，监视子节点的变化
   const config = { childList: true, subtree: true };
@@ -409,7 +401,7 @@ function daonload(url, name){
   document.body.removeChild(link);
 }
 // 下载视频
-function downloadVideo() {
+function downloadVideo(videoSource) {
   // 获取视频并下载
   var videoElement = document.querySelector('.vjs-tech');
   // alert(!!videoElement)
@@ -443,10 +435,10 @@ function getErrorWord() {
       return element;
   }
 
-  for (let index = 0; index < document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p').length; index++) {
-    if (document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+  for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
+    if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
       // 获取祖先元素
-      const ancestor = findAncestorWithClass(document.querySelectorAll('.MuW1NXvm, .HhUPc5G2, .custom-html p')[index], 'RmHagX8t');
+      const ancestor = findAncestorWithClass(document.getElementsByClassName('MuW1NXvm')[index], 'RmHagX8t');
       // 检查是否找到了祖先元素
       if (ancestor) {
           // 获取祖元素的下一个兄弟元素

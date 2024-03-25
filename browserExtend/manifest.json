@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "ClickButtonExtension",
-  "version": "1.0",
-  "description": "A simple extension to click a button with class VAtmtpqL.",
+  "name": "视频下载",
+  "version": "2.0",
+  "description": "视频自动化下载",
   "permissions": ["activeTab"],
   "action": {
     "default_popup": "popup.html"
