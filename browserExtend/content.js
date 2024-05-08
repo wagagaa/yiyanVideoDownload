@@ -1,14 +1,16 @@
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == 'clickButton') {
-      initialCount = document.getElementsByClassName('vjs-tech').length
+      initialCount = 0
       let currentErrorCount = 0
       for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
         if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
           currentErrorCount++
+        } else if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '视频已生成，请点击播放。部分的方言播报，以及指定背景音乐、视频时长、视频风格等，我还在探索和学习中。您也可以尝试其他视频，如：“生成智能交通的视频，四川话播报”。') {
+          initialCount++
         }
       }
-      errorCount = currentErrorCount
+      errorCount = currentErrorCount + document.getElementsByClassName('D9GTH46h').length
       generateVideo()
       monitorVideoCount()
       clearInterval(timer)
@@ -90,106 +92,46 @@ function test() {
   }
 }
 
-const string = `介绍超声波接近开关产品性能
-介绍欧姆龙超声波传感器
-介绍速度传感器
-介绍线速度传感器
-介绍线速度传感器的分类及特点
-介绍磁电式速度传感器
-介绍磁电式速度传感器的工作原理
-介绍磁电式速度传感器产品
-介绍线速度传感器选用语性能比较表
-解绍
-介绍隔爆型传感器的主要性能指标
-介绍激光多普勒测速
-介绍激光多普勒测速的工作原理
-介绍激光多普勒测速产品
-介绍激光测速仪
-介绍信号处理器技术指标
-介绍微波测速
-介绍微波测速工作原理
-介绍微波测速微波测速产品
-介绍角速度传感器
-介绍角速度传感器分类和主要性能指标
-介绍角速度定义
-介绍角速度的分类
-介绍角速度传感器选用与性能比较
-介绍霍尔转速传感器
-介绍霍尔转速传感器的工作原理
-介绍转速传感器选用与性能比较表
-介绍磁电式转速传感器测量范围
-介绍霍尔转速传感器测量范围
-介绍霍尔转速传感器精度
-介绍霍尔转速传感器频率响应
-介绍霍尔转速传感器的特点
-介绍磁电式转速传感器的精度
-介绍磁电式转速传感器频率响应
-介绍磁电式转速传感器的特点
-介绍光电式转速传感器的测量范围
-介绍光电式转速传感器的精度
-介绍光电式转速传感器的频率响应
-介绍光电式转速传感器的特点
-介绍电涡流转速传感器的测量范围
-介绍电涡流转速传感器的精度
-介绍电涡流转速传感器的频率响应
-介绍电涡流转速传感器的特点
-介绍光纤陀螺的测量范围
-介绍光纤陀螺的精度
-介绍光纤陀螺的频率响应
-介绍光纤陀螺的特点
-介绍激光陀螺的测量范围
-介绍激光陀螺的精度
-介绍激光陀螺的频率响应
-介绍激光陀螺的特点
-介绍压电射流角速度传感器的测量范围
-介绍压电射流角速度传感器的精度
-介绍压电射流角速度传感器的频率响应
-介绍压电射流角速度传感器的特点
-介绍霍尔转速传感器产品
-介绍无源转速探头
-介绍霍尔转速传感器主要技术指标
-介绍磁电式转速传感器
-介绍磁电式转速传感器的工作原理
-介绍闭合磁路变磁通式磁电式转速传感器
-介绍磁电式转速传感器主要技术指标
-介绍系列磁电式转速传感器主要技术指标
-小野测器集团磁电式转速传感器使用检测规格
-介绍光电式速度传感器
-介绍光电式速度传感器的工作原理
-介绍反射式光电转速传感器
-介绍直射式光电转速传感器
-介绍光电式速度传感器产品
-介绍电涡流转速传感器
-介绍电涡流转速传感器的工作原理
-介绍电涡流转速传感器产品
-介绍电涡流式转速传感器主要技术指标
-介绍光纤陀螺
-介绍光纤陀螺的工作原理
-介绍激光转速传感器与激光陀螺
-介绍激光转速传感器的工作原理
-介绍激光转速传感器产品
-介绍激光陀螺仪的工作原理
-介绍激光转速表
-介绍激光陀螺产品
-介绍激光转速表主要技术指标
-介绍压电射流角速度传感器
-介绍压电射流角速度传感器产品
-介绍压电射流角速度传感器工作原理
-介绍振动与冲击测量传感器
-介绍机械振动冲击名词术语
-介绍机械振动
-介绍振动
-介绍周期振动
-介绍准周期振动
-介绍准正弦振动
-介绍确定性振动
-介绍随机振动
-介绍高斯随机噪声
-介绍白噪声
-介绍粉红噪声
-介绍窄带随机振动
-介绍宽带随机振动
-介绍稳态振动`
+const string = `介绍耐酸钢的特点及使用范围
+介绍哈氏合金的特点及使用范围
+介绍碳化钨硬质合金的特点及使用范围
+介绍导电橡胶导电氟塑料的特点及使用方法
+介绍电磁流量计的产品
+介绍传感器技术指标
+介绍转换器技术指标
+介绍智能电磁流量计外形尺寸及质量
+介绍电磁流量计技术参数
+介绍流动方向
+介绍量程比
+介绍重复性误差
+介绍进度等级
+介绍被测介质温度
+介绍电磁流量计选型代码
+介绍氟丁橡胶主要性能
+介绍氟丁橡胶适用范围
+介绍聚氨酯橡胶主要性能
+介绍聚氨酯橡胶适用范围
+介绍聚四氟乙烯的主要性能
+介绍聚四氟乙烯适用范围
+介绍电极材料的选择
+介绍电磁流量计电磁材料的选择
+介绍电磁流量计口径及流量的选择
+介绍涡街流量计
+介绍涡街流量计工作原理与结构
+介绍漩涡发生体和检测方式
+介绍漩涡流量计分类
+介绍电容式涡街流量计工作原理特点及应用
+介绍应力式涡街流量计工作原理特点及应用
+介绍升力式涡街质量流量计工作原理特点应用
+介绍振动体式涡接流量计工作原理特点及应用
+介绍热敏式涡街流量计工作原理特点及应用
+介绍超声式涡街流量计的工作原理特点及应用
+介绍差压式涡街质量流量计的工作原理
+介绍法兰行和法兰夹持型
+介绍按传感器结构的工作原理特点
+介绍管道式涡街流量计
+介绍插入式涡街流量计
+介绍防爆型涡街流量计的工作原理`
 
 const array = string.split(/\s*[；\s\n]+\s*/)
 // 获取初始的DOM数量
@@ -259,14 +201,15 @@ function generateVideo() {
     alert('Input with class yc-editor-wrapper not found.');
   }
   // 获取发送按钮并发送
-  setTimeout(() => { // 延迟发送，防止发送失败
+  setTimeout(() => {
     var button = document.querySelector('.VAtmtpqL');
     if (button) {
       button.click();
     } else {
       alert('Button with class VAtmtpqL not found.');
     }
-  }, 35000)
+  }, 3000);
+  
   
   // const timer = setInterval(() => {
   //   var button = document.querySelector('.VAtmtpqL svg');
@@ -311,10 +254,13 @@ function monitorVideoCount() {
             clearInterval(timer) // 清除定时器
             // 监听DOM结构的变化停止
             observer.disconnect();
+            return
           }
-          return
         }
-        generateVideo() // 生成视频
+        // 生成视频
+        setTimeout(() => {
+          generateVideo()
+        }, 35000);
       }
 
       let currentErrorCount = 0
@@ -323,6 +269,7 @@ function monitorVideoCount() {
           currentErrorCount++
         }
       }
+      currentErrorCount = currentErrorCount + document.getElementsByClassName('D9GTH46h').length
       // 判断数量是否发生变化
       if (currentErrorCount !== errorCount) {
         clearInterval(timer) // 清除定时器
@@ -340,14 +287,14 @@ function monitorVideoCount() {
             clearInterval(timer) // 清除定时器
             // 监听DOM结构的变化停止
             observer.disconnect();
+            return
           }
-          
-          return
         }
         // 生成视频
         setTimeout(() => {
           generateVideo()
         }, 10000);
+
       }
   });
   // 配置观察器，监视子节点的变化
@@ -359,17 +306,52 @@ function monitorVideoCount() {
 let timer = null
 function monitorVideoChangeError() {
   timer = setInterval(() => {
-    // 跳过当前词汇，生成下一个视频
-    errorCount++
-    if (initialCount + errorCount >= array.length) {
-      alert('已经生成完毕')
-      clearInterval(timer) // 清除定时器
-      return
+    var buttonLoading = document.querySelector('.mEKFkIX7'); // 停止生成的按钮
+    if (buttonLoading) {
+      buttonLoading.click();
     }
-    generateVideo()
+    // // 跳过当前词汇，生成下一个视频
+    // errorCount++
+    // if (initialCount + errorCount >= array.length) {
+    //   alert('已经生成完毕')
+    //   clearInterval(timer) // 清除定时器
+    //   return
+    // }
+    // generateVideo()
     clearInterval(timer) // 清除定时器
     monitorVideoChangeError() // 重新开始计时
   }, 300000)
+}
+
+function alert (msg) {
+  // 移除之前创建的元素
+  var oldElement = document.querySelector('.alert');
+  if (oldElement) {
+    document.body.removeChild(oldElement);
+  }
+  // 动态创建一个元素，例如一个div
+  var element = document.createElement('div');
+  // 为元素添加类名
+  element.className = 'alert';
+
+  // 设置元素的内容，可以是文本、HTML或另一个元素等
+  element.innerHTML = msg;
+
+  // 设置样式，将其定位在页面的左上角
+  element.style.position = 'absolute'; // 使用绝对定位
+  element.style.top = '0';              // 距离页面顶部为0
+  element.style.right = '0';             // 距离页面左边缘为0
+  element.style.width = 'auto';        // 宽度自适应内容
+  element.style.height = 'auto';       // 高度自适应内容
+  element.style.backgroundColor = 'rgb(0, 0, 0)'; // 红色半透明背景
+  element.style.color = 'white';       // 白色文字
+  element.style.padding = '10px';      // 内边距10像素
+  element.style.zIndex = '9999';       // 确保在最上层显示
+  element.style.border = '1px solid #eee';
+  // 可以添加更多样式，如背景色、边框等
+
+  // 将元素添加到body中，使其成为body的子元素
+  document.body.appendChild(element);
 }
 
 // 下载文件
@@ -390,37 +372,50 @@ function daonload(url, name){
 
   // 方法二
   // 创建一个 <a> 元素
-  var link = document.createElement('a');
-  link.href = 'http://localhost:3000/proxy?url=' + url + '&fileName=' + name;
-  // 设置下载属性，包括文件名
-  link.download = name || 'video.mp4';
-  // 模拟点击触发下载
-  document.body.appendChild(link);
-  link.click();
-  // 清理创建的 <a> 元素
-  document.body.removeChild(link);
-}
-// 下载视频
-function downloadVideo(videoSource) {
-  // 获取视频并下载
-  var videoElement = document.querySelector('.vjs-tech');
-  // alert(!!videoElement)
-  if (videoElement) {
-    // 获取视频的当前源
-    var videoSource = videoElement.src;
+  // var link = document.createElement('a');
+  // link.href = 'http://localhost:3000/proxy?url=' + url + '&fileName=' + name;
+  // // 设置下载属性，包括文件名
+  // link.download = name || 'video.mp4';
+  // // 模拟点击触发下载
+  // document.body.appendChild(link);
+  // link.click();
+  // // 清理创建的 <a> 元素
+  // document.body.removeChild(link);
 
-    // 去掉查询字符串
-    const url = new URL(videoSource);
-    url.search = '';
-    const updatedUrlString = url.toString();
-    const name = array[initialCount + errorCount] + '.mp4'
-    // 输出视频地址
-    console.log('Video Source:', updatedUrlString);
-    daonload(updatedUrlString, name);
-  } else {
-    console.error('Video element with class vjs-tech not found.');
-  }
+  // window.open('http://localhost:3000/proxy?url=' + url + '&fileName=' + name, '_blank')
+
+  var iframe = document.createElement('iframe');
+  iframe.src = 'http://localhost:3000/proxy?url=' + url + '&fileName=' + name;
+  iframe.style.display = 'none'; // 隐藏iframe
+  document.body.appendChild(iframe);
+  // 等待30秒后移除iframe
+  setTimeout(function() {
+    if (iframe.parentNode) {
+      iframe.parentNode.removeChild(iframe);
+    }
+  }, 30000); // 30秒
 }
+// // 下载视频
+// function downloadVideo(videoSource) {
+//   // 获取视频并下载
+//   var videoElement = document.querySelector('.vjs-tech');
+//   // alert(!!videoElement)
+//   if (videoElement) {
+//     // 获取视频的当前源
+//     var videoSource = videoElement.src;
+
+//     // 去掉查询字符串
+//     const url = new URL(videoSource);
+//     url.search = '';
+//     const updatedUrlString = url.toString();
+//     const name = array[initialCount + errorCount] + '.mp4'
+//     // 输出视频地址
+//     console.log('Video Source:', updatedUrlString);
+//     daonload(updatedUrlString, name);
+//   } else {
+//     console.error('Video element with class vjs-tech not found.');
+//   }
+// }
 
 /**
  * 词条生成失败的收集机制
@@ -435,32 +430,37 @@ function getErrorWord() {
       return element;
   }
 
-  for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
-    if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
-      // 获取祖先元素
-      const ancestor = findAncestorWithClass(document.getElementsByClassName('MuW1NXvm')[index], 'RmHagX8t');
-      // 检查是否找到了祖先元素
-      if (ancestor) {
-          // 获取祖元素的下一个兄弟元素
-          const sibling = ancestor.nextElementSibling;
-          // 检查是否找到了下一个兄弟元素
-          if (sibling) {
-              // 获取下一个兄弟元素的子元素
-              const childZi = sibling.querySelector('.H7oUCk_o');
-              // 检查是否找到了子元素
-              if (childZi) {
-                  // alert('找到符合条件的元素:'+ childZi.textContent);
-                  errorWord.push(childZi.textContent)
-              } else {
-                alert('未找到符合条件的子元素');
-              }
-          } else {
-            alert('未找到符合条件的兄弟元素');
-          }
-      } else {
-        alert('未找到符合条件的祖先元素');
+  // 找到没有生成视频的词条
+  function findErrorWord(dom) {
+    // 获取祖先元素
+    const ancestor = findAncestorWithClass(dom, 'RmHagX8t');
+    // 检查是否找到了祖先元素
+    if (ancestor) {
+      // 获取祖元素的下一个兄弟元素
+      const sibling = ancestor.nextElementSibling;
+      // 检查是否找到了下一个兄弟元素
+      if (sibling) {
+        // 获取下一个兄弟元素的子元素
+        const childZi = sibling.querySelector('.H7oUCk_o');
+        // 检查是否找到了子元素
+        if (childZi) {
+          // 获取词条
+          const word = childZi.innerText;
+          // 将词条添加到数组中
+          errorWord.push(word);
+        }
       }
     }
+    return errorWord
+  }
+
+  for (let index = 0; index < document.getElementsByClassName('MuW1NXvm').length; index++) {
+    if (document.getElementsByClassName('MuW1NXvm')[index].innerText === '当前您的指令超出了插件预设能力范围，您可展开插件执行状态，或换一个指令再次尝试。') {
+      findErrorWord(document.getElementsByClassName('MuW1NXvm')[index])
+    }
+  }
+  for (let index = 0; index < document.getElementsByClassName('D9GTH46h').length; index++) {
+    findErrorWord(document.getElementsByClassName('D9GTH46h')[index])
   }
 
   const modifiedArray = errorWord.map(str => {
